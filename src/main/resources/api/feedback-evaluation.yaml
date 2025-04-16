@@ -1,0 +1,114 @@
+
+openapi: 3.0.1
+info:
+  title: Feedback and Evaluation API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /feedback:
+    post:
+      summary: Submit feedback
+      operationId: createFeedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '200':
+          description: Feedback submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /feedback/{id}:
+    get:
+      summary: Retrieve feedback by ID
+      operationId: getFeedbackById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Feedback found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+        '404':
+          description: Not found
+  /evaluate:
+    post:
+      summary: Evaluate a summary
+      operationId: evaluateSummary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluationRequest'
+      responses:
+        '200':
+          description: Evaluation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+  /evaluate/{id}:
+    get:
+      summary: Get evaluation by ID
+      operationId: getEvaluationById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Evaluation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+components:
+  schemas:
+    Feedback:
+      type: object
+      properties:
+        id:
+          type: string
+        summaryId:
+          type: string
+        userId:
+          type: string
+        rating:
+          type: string
+          enum: [positive, neutral, negative]
+        comment:
+          type: string
+    EvaluationRequest:
+      type: object
+      properties:
+        summary:
+          type: string
+        originalText:
+          type: string
+    Evaluation:
+      type: object
+      properties:
+        id:
+          type: string
+        summaryId:
+          type: string
+        qualityScore:
+          type: integer
+        lengthRatio:
+          type: number
+        keywordCoverage:
+          type: number
