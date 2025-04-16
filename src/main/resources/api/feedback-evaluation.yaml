@@ -2,12 +2,32 @@
 openapi: 3.0.1
 info:
   title: Feedback and Evaluation API
+  description: |-
+    This is a project to provide feedback and evaluation of summarization models
+
+    Some useful links:
+    - [The Feedback Evaluation repository](https://github.com/sankalp-it/feedback-evaluation)
+    - [The source API definition for the Pet Store](https://github.com/sankalp-it/feedback-evaluation/blob/main/src/main/resources/api/feedback-evaluation.yaml)
   version: 1.0.0
 servers:
   - url: http://localhost:8080
+tags:
+  - name: feedback
+    description: Everything about your Feedback
+    externalDocs:
+      description: Find out more about summarization model feedback
+      url: https://swagger.io
+  - name: evaluation
+    description: Everything about your Evaluation
+    externalDocs:
+      description: Find out more about summarization model evaluation
+      url: https://swagger.io
 paths:
   /feedback:
     post:
+      tags:
+        - feedback
+      description: Submit feedback for a summary
       summary: Submit feedback
       operationId: createFeedback
       requestBody:
@@ -25,6 +45,9 @@ paths:
                 $ref: '#/components/schemas/Feedback'
   /feedback/{id}:
     get:
+      tags:
+        - feedback
+      description: Retrieve feedback by ID
       summary: Retrieve feedback by ID
       operationId: getFeedbackById
       parameters:
@@ -44,6 +67,9 @@ paths:
           description: Not found
   /evaluate:
     post:
+      tags:
+        - evaluation
+      description: Evaluate a summary
       summary: Evaluate a summary
       operationId: evaluateSummary
       requestBody:
@@ -61,6 +87,9 @@ paths:
                 $ref: '#/components/schemas/Evaluation'
   /evaluate/{id}:
     get:
+      tags:
+        - evaluation
+      description: Get evaluation by ID
       summary: Get evaluation by ID
       operationId: getEvaluationById
       parameters:
